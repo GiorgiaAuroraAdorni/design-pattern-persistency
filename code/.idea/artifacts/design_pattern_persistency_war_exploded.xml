@@ -7,6 +7,9 @@
         <element id="directory" name="classes">
           <element id="module-output" name="design-pattern-persistency" />
         </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/sqlite-jdbc-3.28.0.jar" />
+        </element>
       </element>
     </root>
   </artifact>
