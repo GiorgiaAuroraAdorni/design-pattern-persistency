@@ -225,5 +225,19 @@ public class User {
 //            System.out.println(e.getMessage());
 //        }
 //    }
+//  delete
+    public static boolean delete(User user, Database db) {
+        try (Connection conn = DriverManager.getConnection(db.url)){
+
+            PreparedStatement stm = conn.prepareStatement(deleteStatement);
+            stm.setString(1, user.getUsername());
+
+            stm.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
 
 }

@@ -44,6 +44,13 @@
 							<td><c:out value = "${item.getEmail()}"/></td>
 							<td><c:out value = "${item.getAddress()}"/></td>
 							<td><c:out value = "${item.getBestFriend()}"/></td>
+							<td>
+								<form name="frm" method="post"
+									  action="/design_pattern/FrontController">
+									<input type="hidden" name="username" value="${item.username}">
+									<button type="submit" name="command" value="auth.Delete">Delete</button>
+								</form>
+							</td>
 						</tr>
 				    </c:forEach>
 				</tbody>
