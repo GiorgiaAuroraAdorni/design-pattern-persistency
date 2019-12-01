@@ -29,5 +29,6 @@
       </library>
     </orderEntry>
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.27" level="application_server_libraries" />
   </component>
 </module>
