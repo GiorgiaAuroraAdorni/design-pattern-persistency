@@ -34,6 +34,6 @@ public class RegisterCommand extends AbstractCommand {
 			throw new RuntimeException(e);
 		}
 		
-		response.sendRedirect("/design_pattern/");
+		response.sendRedirect("/design_pattern/users");
 	}
 }

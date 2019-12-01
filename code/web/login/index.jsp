@@ -18,7 +18,7 @@
 </form>
 
 <p>
-Go <a href="/design_pattern/">back</a>.
+Go <a href="/design_pattern/users">back</a>.
 </p>
 
 </body>

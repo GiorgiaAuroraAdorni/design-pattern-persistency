@@ -24,9 +24,7 @@ public class FrontController extends HttpServlet {
 		String commandName = request.getParameter("command");
 		commandName = "controller.commands." + commandName + "Command";
 		
-		//retrieve command implementation
-		//using reflection the front controller works for any
-		//number of implemented commands 
+		//retrieve command implementation using reflection the front controller works for any number of implemented commands
 		Class<?> commandClass;
 		try {
 			commandClass = Class.forName(commandName);
@@ -42,7 +40,6 @@ public class FrontController extends HttpServlet {
      */
     public FrontController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -91,8 +88,6 @@ public class FrontController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
 		AbstractCommand command = createComand(request, response);
 		
 		if (command == null) {
@@ -102,7 +97,6 @@ public class FrontController extends HttpServlet {
 		//run command
 		command.init(getServletContext(), request, response);
 		command.processPost();
-		
 	}
 
 }

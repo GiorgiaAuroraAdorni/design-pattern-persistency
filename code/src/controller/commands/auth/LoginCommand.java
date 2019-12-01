@@ -2,6 +2,8 @@ package controller.commands.auth;
 
 import auth.AuthManager;
 import controller.commands.AbstractCommand;
+import model.Database;
+
 import java.io.IOException;
 
 public class LoginCommand extends AbstractCommand {
@@ -19,10 +21,11 @@ public class LoginCommand extends AbstractCommand {
 		AuthManager auth = new AuthManager(request.getSession());
 		
 		if (!auth.login(username, password)) {
-			// FIXME
 			throw new RuntimeException("Login Failed");
 		}
 		
-		response.sendRedirect("/design_pattern/");
+		response.sendRedirect("/design_pattern/users");
 	}
+
+	Database db = Database.getInstance();
 }

@@ -4,39 +4,39 @@ import java.sql.*;
 
 public class Database {
 
-    public String url;
-    public static String fileName;
+    String url;
+    private static String fileName;
     private static Database instance = null;
 
     public static Database getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             Database db = new Database();
+            System.out.print(System.getProperty("user.dir"));
             db.createNewDatabase("Database.db");
             Database.createNewTable(db);
             instance = db;
             return db;
-        }
-        else {
+        } else {
             return instance;
         }
     }
 
-    private static void createNewDatabase(String fileName) {
+    private void createNewDatabase(String fileName) {
         Database.fileName = fileName;
 
         String url = "jdbc:sqlite:" + fileName;
         Connection c = null;
         Statement stmt = null;
 
-        try{
+        try {
             try {
                 Class.forName("org.sqlite.JDBC");
                 c = DriverManager.getConnection("jdbc:sqlite:test.db");
                 System.out.println("Opened database successfully");
 
                 c.close();
-            } catch ( Exception e ) {
-                System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
                 System.exit(0);
             }
 
@@ -70,7 +70,7 @@ public class Database {
         String addresses = "CREATE TABLE IF NOT EXISTS addresses (\n"
                 + " streetAddress TEXT PRIMARY KEY);";
 
-        try{
+        try {
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             stmt.execute(users);
@@ -81,5 +81,4 @@ public class Database {
             System.out.println(e.getMessage());
         }
     }
-
 }
