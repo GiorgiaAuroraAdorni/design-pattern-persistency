@@ -1,15 +1,17 @@
 package auth;
 
+import model.Database;
 import model.User;
 
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
 public class AuthManager {
 
 	private static String LOGGED_USER_KEY = "loggedUser";
 
 	private HttpSession session;
+
+	private Database db = Database.getInstance();
 	
 	public AuthManager(HttpSession session) {
 		this.session = session;
@@ -20,21 +22,13 @@ public class AuthManager {
 	}
 	
 	public boolean login(String username, String password) {
-		Optional<User> selectedUser = UserManager
-											.getShared()
-											.getUsers()
-											.stream()
-											.filter(user ->
-												user.getUsername().equals(username) &&
-												user.getPassword().equals(password)
-											)
-											.findFirst();
+		User selectedUser = User.findByUsername(username, db);
 		
-		if (!selectedUser.isPresent()) {
+		if (selectedUser == null || !selectedUser.getPassword().equals(password)) {
 			return false;
 		}
 
-		session.setAttribute(LOGGED_USER_KEY, selectedUser.get());
+		session.setAttribute(LOGGED_USER_KEY, selectedUser);
 		return true;
 	}
 	

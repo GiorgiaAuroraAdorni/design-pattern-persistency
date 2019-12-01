@@ -1,9 +1,8 @@
 package controller.commands.auth;
 
-import auth.UserManager;
 import controller.commands.AbstractCommand;
-import exception.ExistingUserException;
 import model.Address;
+import model.Database;
 import model.User;
 
 import java.io.IOException;
@@ -29,11 +28,11 @@ public class RegisterCommand extends AbstractCommand {
 		User bf = new User(bestFriend, bestFriend, null, null, null, null);
 
 		try {
-			UserManager.getShared().createUser(new User(username, name, email, a, password, bf));
-		} catch (ExistingUserException e) {
+			User.create(new User(username, name, email, a, password, bf), Database.getInstance());
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
-		response.sendRedirect("/design_pattern/users");
+
+		response.sendRedirect("/design_pattern/FrontController?command=auth.UserList");
 	}
 }

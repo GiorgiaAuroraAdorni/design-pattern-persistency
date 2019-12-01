@@ -24,7 +24,7 @@ public class LoginCommand extends AbstractCommand {
 			throw new RuntimeException("Login Failed");
 		}
 		
-		response.sendRedirect("/design_pattern/users");
+		response.sendRedirect("/design_pattern/FrontController?command=auth.UserList");
 	}
 
 	Database db = Database.getInstance();

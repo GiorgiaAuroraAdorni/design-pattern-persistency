@@ -1,7 +1,7 @@
 package controller.commands.auth;
 
-import auth.UserManager;
 import controller.commands.AbstractCommand;
+import model.Database;
 import model.User;
 
 import java.io.IOException;
@@ -13,9 +13,7 @@ public class UserListCommand extends AbstractCommand {
 
 	@Override
 	public void processGet() throws IOException, ServletException {
-		List<User> users = UserManager
-				.getShared()
-				.getUsers();
+		List<User> users = User.findAll(Database.getInstance());
 		
 		request.setAttribute("users", users);
 		

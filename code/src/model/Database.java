@@ -4,34 +4,30 @@ import java.sql.*;
 
 public class Database {
 
-    String url;
-    private static String fileName;
+    String url = "jdbc:sqlite:Database.db";
     private static Database instance = null;
 
     public static Database getInstance() {
+        System.out.print(System.getProperty("user.dir"));
+
         if (instance == null) {
             Database db = new Database();
-            System.out.print(System.getProperty("user.dir"));
-            db.createNewDatabase("Database.db");
-            Database.createNewTable(db);
+            db.createNewDatabase();
+            db.createNewTable();
             instance = db;
-            return db;
-        } else {
-            return instance;
         }
+
+        return instance;
     }
 
-    private void createNewDatabase(String fileName) {
-        Database.fileName = fileName;
-
-        String url = "jdbc:sqlite:" + fileName;
+    private void createNewDatabase() {
         Connection c = null;
         Statement stmt = null;
 
         try {
             try {
                 Class.forName("org.sqlite.JDBC");
-                c = DriverManager.getConnection("jdbc:sqlite:test.db");
+                c = DriverManager.getConnection(url);
                 System.out.println("Opened database successfully");
 
                 c.close();
@@ -52,10 +48,7 @@ public class Database {
         }
     }
 
-    private static void createNewTable(Database db) {
-        // SQLite connection string
-        String url = "jdbc:sqlite:";
-
+    private void createNewTable() {
         // SQL statement for creating a new table
         String users = "CREATE TABLE IF NOT EXISTS users (\n"
                 + " username TEXT PRIMARY KEY,\n"
@@ -70,6 +63,10 @@ public class Database {
         String addresses = "CREATE TABLE IF NOT EXISTS addresses (\n"
                 + " streetAddress TEXT PRIMARY KEY);";
 
+        String testUsers = "INSERT OR IGNORE INTO " +
+            "users(username, name, email, address, password, bestFriend) VALUES " +
+            "(\"pincopallino\", \"Pinco Pallino\", \"pincopallino@usi.ch\", \"via usi 1\", \"pallinopassword\", \"amico mio\");";
+
         try {
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
@@ -77,6 +74,7 @@ public class Database {
             System.out.println("Created table " + "\n" + users);
             stmt.execute(addresses);
             System.out.println("Created table " + "\n" + addresses);
+            stmt.execute(testUsers);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

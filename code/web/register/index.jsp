@@ -25,7 +25,7 @@
 </form>
 
 <p>
-Go <a href="/design_pattern/users">back</a>.
+Go <a href="/design_pattern/FrontController?command=auth.UserList">back</a>.
 </p>
 
 </body>
