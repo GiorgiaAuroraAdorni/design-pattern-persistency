@@ -1,7 +1,6 @@
 package view.auth;
 
-import model.auth.User;
-import model.auth.User.Role;
+import model.User;
 
 public class AuthHelper {
 
@@ -16,7 +15,7 @@ public class AuthHelper {
 	}
 	
 	public boolean isAdmin() {	
-		return (this.isAuthenticated()) && (this.user.getRole() == Role.ADMIN);
+		return (this.isAuthenticated());
 	}
 	
 	public String getUsername() {		

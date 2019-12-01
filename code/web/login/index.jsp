@@ -8,7 +8,7 @@
 <body>
 
 <h1>Login</h1>
-<form name="frm" method="post" action="/Adorni/FrontController">
+<form name="frm" method="post" action="/design_pattern/FrontController">
 <p>
 <label for="username">Username</label><input type="text" name="username"><br>
 <label for="password">Password</label><input type="password" name="password"><br>
@@ -18,7 +18,7 @@
 </form>
 
 <p>
-Go <a href="/Adorni/">back</a>.
+Go <a href="/design_pattern/">back</a>.
 </p>
 
 </body>

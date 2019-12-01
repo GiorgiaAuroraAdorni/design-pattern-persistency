@@ -55,7 +55,7 @@
 	</c:choose>
 	
 	<p>
-		Go <a href="/Adorni/">back</a>.
+		Go <a href="/design_pattern/">back</a>.
 	</p>	
 </body>
 </html>

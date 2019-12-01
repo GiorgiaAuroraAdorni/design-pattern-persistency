@@ -1,4 +1,4 @@
-<%@ page import="view.auth.AuthHelper"%>
+<%--<%@ page import="view.auth.AuthHelper"%>--%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,17 +19,17 @@
 			</h2>
 
 			<form name="frm" method="post"
-				action="/AdorniBassoCeredaFerri/FrontController">
+				action="//design_pattern/FrontController">
 				<button type="submit" name="command" value="auth.Logout">Logout</button>
 			</form>
-			
+
 			<br/>
 
 			<c:choose>
 				<c:when test="${authHelper.isAdmin()}">
 					<p>
 						<form name="frm" method="get"
-							action="/AdorniBassoCeredaFerri/FrontController">
+							action="/design_pattern/FrontController">
 							You are an admin!
 							<button type="submit" name="command" value="auth.UserList">Show users list</button>
 						</form>
@@ -43,11 +43,11 @@
 		<c:otherwise>
 			<h2>Welcome, guest!</h2>
 
-			<form name="frm" method="get" action="/AdorniBassoCeredaFerri/login">
+			<form name="frm" method="get" action="/design_pattern/login">
 				<button type="submit">Login</button>
 			</form>
 			<form name="frm" method="get"
-				action="/AdorniBassoCeredaFerri/register">
+				action="/design_pattern/register">
 				<button type="submit">Register</button>
 			</form>
 		</c:otherwise>
