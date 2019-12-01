@@ -1,10 +1,9 @@
 package auth;
 
-import java.util.Optional;
+import model.User;
 
 import javax.servlet.http.HttpSession;
-
-import model.auth.User;
+import java.util.Optional;
 
 public class AuthManager {
 

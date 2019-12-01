@@ -1,12 +1,13 @@
 package auth;
 
 import exception.ExistingUserException;
+import model.Address;
+import model.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import model.auth.User;
 
 public class UserManager {
 	
@@ -22,16 +23,15 @@ public class UserManager {
 		
 		return sharedManager;
 	}
-	
+
+	private List<Address> addresses = new ArrayList<Address> (Arrays.<Address>asList(
+			new Address ("via lambertenghi 1"),
+			new Address ("via del picchio 1")));
+
 	private List<User> users = new ArrayList<User> (Arrays.<User>asList(
-			new User ("mbasso", "mbassopassword", "Matteo Basso", "bassom@usi.ch", "Lugano", "Switzerland", User.Role.ADMIN),
-			new User ("mferri", "123", "Marco Ferri", "ferrima@usi.ch", "Lugano", "Switzerland", User.Role.ADMIN),
-			new User ("gadorni", "gadornipassword", "Giorgia Adorni", "adorng@usi.ch", "Lugano", "Switzerland", User.Role.ADMIN),
-			new User ("ecereda", "eceredapassword", "Elia Cereda", "cerede@usi.ch", "Lugano", "Switzerland", User.Role.ADMIN),
-			new User ("admin", "admin", "Admin", "admin@swe.it", "Lugano", "Switzerland", User.Role.ADMIN),
-			new User ("reader", "reader", "Reader", "reader@swe.it", "Lugano", "Switzerland", User.Role.READER)
-	));
-	
+			new User ("pincopallino", "Pinco Pallino", "pincopallino@usi.ch", addresses.get(1), "pallinopassword", null),
+			new User ("gadorni", "Giorgia Adorni", "adorng@usi.ch", addresses.get(0), "gadornipassword",null)));
+
 	public void createUser(User user) throws ExistingUserException {
 		if (users.stream().anyMatch(usr -> usr.equals(user))) {
 			throw new ExistingUserException();
@@ -41,6 +41,7 @@ public class UserManager {
 	}
 	
 	public List<User> getUsers() {
+
 		return users;
 	}
 }
