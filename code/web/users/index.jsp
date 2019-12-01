@@ -31,8 +31,8 @@
 						<td>Password</td>
 						<td>Name</td>
 						<td>Email</td>
-						<td>City</td>
-						<td>Role</td>
+						<td>Address</td>
+						<td>BestFriend</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -42,8 +42,8 @@
 							<td><c:out value = "${item.getPassword()}"/></td>
 							<td><c:out value = "${item.getName()}"/></td>
 							<td><c:out value = "${item.getEmail()}"/></td>
-							<td><c:out value = "${item.getCity()}"/></td>
-							<td><c:out value = "${item.getRole()}"/></td>
+							<td><c:out value = "${item.getAddress()}"/></td>
+							<td><c:out value = "${item.getBestFriend()}"/></td>
 						</tr>
 				    </c:forEach>
 				</tbody>
@@ -55,7 +55,7 @@
 	</c:choose>
 	
 	<p>
-		Go <a href="/AdorniBassoCeredaFerri/">back</a>.
+		Go <a href="/Adorni/">back</a>.
 	</p>	
 </body>
 </html>

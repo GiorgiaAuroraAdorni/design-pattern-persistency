@@ -8,7 +8,7 @@
 <body>
 
 <h1>Create a new account</h1>
-<form name="frm" method="post" action="/AdorniBassoCeredaFerri/FrontController">
+<form name="frm" method="post" action="/Adorni/FrontController">
 <p>
 <label for="username">Username</label><input type="text" name="username"><br>
 <label for="password">Password</label><input type="password" name="password"><br>
@@ -17,15 +17,15 @@
 <p>
 <label for="name">Name</label><input type="text" name="name"><br>
 <label for="email">Email</label><input type="text" name="email"><br>
-<label for="city">City</label><input type="text" name="city"><br>
-<label for="country">Country</label><input type="text" name="country"><br>
+<label for="address">Address</label><input type="text" name="address"><br>
+<label for="bestFriend">BestFriend</label><input type="text" name="bestFriend"><br>
 </p>
 
 <button type="submit" name="command" value="auth.Register">Register</button>
 </form>
 
 <p>
-Go <a href="/AdorniBassoCeredaFerri/">back</a>.
+Go <a href="/Adorni/">back</a>.
 </p>
 
 </body>
