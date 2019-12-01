@@ -42,8 +42,8 @@
 							<td><c:out value = "${item.getPassword()}"/></td>
 							<td><c:out value = "${item.getName()}"/></td>
 							<td><c:out value = "${item.getEmail()}"/></td>
-							<td><c:out value = "${item.getAddress()}"/></td>
-							<td><c:out value = "${item.getBestFriend()}"/></td>
+							<td><c:out value = "${item.address.getStreetAddress()}"/></td>
+							<td><c:out value = "${item.bestFriend.getUsername()}"/></td>
 							<td>
 								<form name="frm" method="post"
 									  action="/design_pattern/FrontController">

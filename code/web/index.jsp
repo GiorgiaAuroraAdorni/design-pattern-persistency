@@ -50,6 +50,10 @@
 				action="/design_pattern/register">
 				<button type="submit">Register</button>
 			</form>
+			<form name="frm" method="get"
+				  action="/design_pattern/FrontController">
+				<button type="submit" name="command" value="auth.UserList">User List</button>
+			</form>
 		</c:otherwise>
 	</c:choose>
 </body>
