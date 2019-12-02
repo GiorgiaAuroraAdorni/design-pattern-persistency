@@ -6,16 +6,17 @@
 
 <c:set var="isUpdate" value="${(user != null) ? true : false}" />
 <c:set var="title" value="${isUpdate ? 'Update user account' : 'Create a new account'}" />
+<c:set var="command" value="${isUpdate ? 'auth.Update' : 'auth.Register'}" />
 <c:set var="submitText" value="${isUpdate ? 'Update' : 'Create'}" />
 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title><c:out value="${title}" /></title>
+<title><c:out value="${title}"/></title>
 </head>
 <body>
 
-<h1><c:out value="${title}" /></h1>
+<h1><c:out value="${title}"/></h1>
 <form name="frm" method="post" action="/design_pattern/FrontController">
 <p>
 <label for="username">Username</label><input type="text" name="username" value="${user.username}" ${isUpdate ? "readonly" : "required"}><br>
@@ -29,7 +30,7 @@
 <label for="bestFriend">BestFriend</label><input type="text" name="bestFriend" value="${user.bestFriend}"><br>
 </p>
 
-<button type="submit" name="command" value="auth.Register"><c:out value="${submitText}" /></button>
+<button type="submit" name="command" value="${command}"><c:out value="${submitText}" /></button>
 </form>
 
 <p>
