@@ -15,3 +15,23 @@ This assignment has been developed by Giorgia Adorni.
 ```
 $ git clone https://github.com/GiorgiaAuroraAdorni/design-pattern-persistency.git
 ```
+
+
+
+## Design of the architecture
+
+### Model
+
+### Views
+
+### Controller
+
+
+
+## Patterns
+
+- an indication of the chosen patterns with a short justification of the choice
+
+## Screenshots
+
+- few screenshots that give evidence of the results of executing the system.  

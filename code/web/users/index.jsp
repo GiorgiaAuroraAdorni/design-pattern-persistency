@@ -47,7 +47,7 @@
                     <td><c:out value="${item.getName()}"/></td>
                     <td><c:out value="${item.getEmail()}"/></td>
                     <td><c:out value="${item.address.getStreetAddress()}"/></td>
-                    <td><c:out value="${item.bestFriend.getUsername()}"/></td>
+                    <td><c:out value="${item.getBestFriend()}"/></td>
                     <td>
                         <form name="frm" method="get"
                               action="/design_pattern/FrontController">

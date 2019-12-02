@@ -8,8 +8,6 @@ public class Database {
     private static Database instance = null;
 
     public static Database getInstance() {
-        System.out.print(System.getProperty("user.dir"));
-
         if (instance == null) {
             Database db = new Database();
             db.createNewDatabase();
@@ -75,6 +73,7 @@ public class Database {
             stmt.execute(addresses);
             System.out.println("Created table " + "\n" + addresses);
             stmt.execute(testUsers);
+            System.out.println("Added record to table " + "\n" + users);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

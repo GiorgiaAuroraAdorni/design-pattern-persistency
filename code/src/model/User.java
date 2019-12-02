@@ -1,5 +1,7 @@
 package model;
 
+import org.sqlite.util.StringUtils;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,18 +12,17 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private User bestFriend;
+    private String bestFriend;
     private Address address;
 
     private static String selectWhere = "SELECT * " + "FROM users WHERE ";
     private final static String insertStatement = "INSERT INTO users (username, name, email, address, password, bestFriend) " + "VALUES(?, ?, ?, ?, ?, ?)";
-    private final static String updateStatement = "UPDATE users SET ";
+    private final static String updateStatement = "UPDATE users SET name=?, email=?, address=?, password=?, bestFriend=? WHERE username=?";
     private final static String findAll = "SELECT *  FROM users";
-//	private final static String delete = "DELETE FROM Users WHERE id == ";
-
+	private final static String deleteStatement = "DELETE FROM users WHERE username=?";
 
     //	Constructor
-    public User(String username, String name, String email, Address address, String password, User bestFriend) {
+    public User(String username, String name, String email, Address address, String password, String bestFriend) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -63,11 +64,11 @@ public class User {
         this.email = email;
     }
 
-    public User getBestFriend() {
+    public String getBestFriend() {
         return bestFriend;
     }
 
-    public void setBestFriend(User bestFriend) {
+    public void setBestFriend(String bestFriend) {
         this.bestFriend = bestFriend;
     }
 
@@ -90,9 +91,8 @@ public class User {
         String bestFriend = rs.getString("bestFriend");
 
         Address a = new Address(address);
-        User bf = new User(bestFriend, bestFriend, bestFriend, a, bestFriend, null);
 
-        User result = new User(username, name, email, a, password, bf);
+        User result = new User(username, name, email, a, password, bestFriend);
         return result;
     }
 
@@ -102,14 +102,10 @@ public class User {
         if (user.getBestFriend().equals("")) {
             bestFriend = null;
         } else {
-            bestFriend = user.getBestFriend().getUsername();
+            bestFriend = user.getBestFriend();
         }
         try (Connection conn = DriverManager.getConnection(db.url)) {
-            Address address = Address.findByStreetAddress(user.getAddress().getStreetAddress(), db);
-            if (address == null) {
-                address = new Address(user.getAddress().getStreetAddress());
-                Address.insert(address, db);
-            }
+            Address address = user.getAddress();
 
             PreparedStatement stm = conn.prepareStatement(insertStatement);
 
@@ -135,20 +131,13 @@ public class User {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next()) {
-                Address address = Address.findByStreetAddress(rs.getString("address"), db);
-                User bestFriend = new User(rs.getString("username"),
-                        rs.getString("name"),
-                        rs.getString("email"),
-                        address,
-                        rs.getString("password"),
-                        null);
-
+                Address address = new Address(rs.getString("address"));
                 User user = new User(rs.getString("username"),
                         rs.getString("name"),
                         rs.getString("email"),
                         address,
                         rs.getString("password"),
-                        bestFriend);
+                        rs.getString("bestFriend"));
                 rs.close();
                 return user;
             }
@@ -224,7 +213,6 @@ public class User {
     //    update
     public static boolean update(User user, Database db) {
         Address address = user.getAddress();
-        User bestFriend = user.getBestFriend();
         try (Connection conn = DriverManager.getConnection(db.url)){
 
             PreparedStatement stm = conn.prepareStatement(updateStatement);
@@ -233,7 +221,7 @@ public class User {
             stm.setString(2, user.getEmail());
             stm.setString(3, address.getStreetAddress());
             stm.setString(4, user.getPassword());
-            stm.setString(5, bestFriend.getUsername());
+            stm.setString(5, user.getBestFriend());
             stm.setString(6, user.getUsername());
 
             stm.executeUpdate();

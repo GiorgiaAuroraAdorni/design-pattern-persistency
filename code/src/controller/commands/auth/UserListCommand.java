@@ -1,6 +1,7 @@
 package controller.commands.auth;
 
 import controller.commands.AbstractCommand;
+import model.Address;
 import model.Database;
 import model.User;
 
@@ -41,7 +42,6 @@ public class UserListCommand extends AbstractCommand {
 					throw new UnsupportedOperationException();
 			}
 		}
-
 		request.setAttribute("users", users);
 
 		sc.getRequestDispatcher("/users/index.jsp").forward(request, response);

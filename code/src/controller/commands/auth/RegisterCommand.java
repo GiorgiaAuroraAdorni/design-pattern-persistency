@@ -25,10 +25,9 @@ public class RegisterCommand extends AbstractCommand {
 		String bestFriend = request.getParameter("bestFriend");
 
 		Address a = new Address(address);
-		User bf = new User(bestFriend, bestFriend, null, null, null, null);
 
 		try {
-			User.create(new User(username, name, email, a, password, bf), Database.getInstance());
+			User.create(new User(username, name, email, a, password, bestFriend), Database.getInstance());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
