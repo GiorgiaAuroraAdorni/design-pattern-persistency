@@ -79,47 +79,57 @@ public class User {
         this.address = address;
     }
 
-    //	search
-    public static User findByUsername(String username, Database db) {
-        String query = selectWhere + "username == \"" + username + "\" ;";
-        return find(query, db);
-    }
-
-    public static User findByName(String name, Database db) {
-        String query = selectWhere + "name == \"" + name + "\" ;";
-        return find(query, db);
-    }
-
-    public static User findByEmail(String email, Database db) {
-        String query = selectWhere + "email == \"" + email + "\" ;";
-        return find(query, db);
-    }
-
-    public static User findByAddress(Address address, Database db) {
-        String query = selectWhere + "address == \"" + address + "\" ;";
-        return find(query, db);
-    }
-
-    public static User findByBestFriend(String bestFriend, Database db) {
-        String query = selectWhere + "bestFriend == \"" + bestFriend + "\" ;";
-        return find(query, db);
-    }
-
     //    load
     protected static User load(ResultSet rs) throws SQLException{
         String username = rs.getString("username");
-    // Chaeck for cached objects
+
         String name = rs.getString("name");
         String email = rs.getString("email");
-//        String address = rs.getString("address");
+        String address = rs.getString("address");
         String password = rs.getString("password");
-//        String bestFriend = rs.getString("bestFriend");
+        String bestFriend = rs.getString("bestFriend");
 
-        User result = new User(username, name, email, null, password, null);
+        Address a = new Address(address);
+        User bf = new User(bestFriend, bestFriend, bestFriend, a, bestFriend, null);
+
+        User result = new User(username, name, email, a, password, bf);
         return result;
     }
 
-    //	find
+    //	create
+    public static boolean create(User user, Database db) {
+        String bestFriend;
+        if (user.getBestFriend().equals("")) {
+            bestFriend = null;
+        } else {
+            bestFriend = user.getBestFriend().getUsername();
+        }
+        try (Connection conn = DriverManager.getConnection(db.url)) {
+            Address address = Address.findByStreetAddress(user.getAddress().getStreetAddress(), db);
+            if (address == null) {
+                address = new Address(user.getAddress().getStreetAddress());
+                Address.insert(address, db);
+            }
+
+            PreparedStatement stm = conn.prepareStatement(insertStatement);
+
+            stm.setString(1, user.getUsername());
+            stm.setString(2, user.getName());
+            stm.setString(3, user.getEmail());
+            stm.setString(4, address.getStreetAddress());
+            stm.setString(5, user.getPassword());
+            stm.setString(6, bestFriend);
+
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+//    search
     private static User find(String query, Database db) {
         try (Connection conn = DriverManager.getConnection(db.url)) {
             Statement stmt = conn.createStatement();
@@ -164,68 +174,77 @@ public class User {
         return users;
     }
 
-    //	create
-    public static boolean create(User user, Database db) {
-        String bestFriend;
-        if (user.getBestFriend().equals("")) {
-            bestFriend = null;
-        } else {
-            bestFriend = "\"" + user.getBestFriend() + "\"";
-        }
-        try (Connection conn = DriverManager.getConnection(db.url)) {
-            Address address = Address.findByStreetAddress(user.getAddress().getStreetAddress(), db);
-            if (address == null) {
-                address = new Address(user.getAddress().getStreetAddress());
-                Address.insert(address, db);
+    private static List<User> findAllByQuery(String query, Database db, Object... queryParams) {
+        List<User> users = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(db.url); PreparedStatement stm = conn.prepareStatement(query)){
+
+            for (int i = 0; i < queryParams.length; i++) {
+                stm.setObject(i + 1, queryParams[i]);
             }
 
-            PreparedStatement stm = conn.prepareStatement(insertStatement);
+            ResultSet results = stm.executeQuery();
 
-            stm.setString(1, user.getUsername());
-            stm.setString(2, user.getName());
-            stm.setString(3, user.getEmail());
-            stm.setString(4, address.getStreetAddress());
-            stm.setString(5, user.getPassword());
-            stm.setString(6, bestFriend);
+            while (results.next()) {
+                User user = load(results);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+    public static User findByUsername(String username, Database db) {
+        String query = selectWhere + "username == \"" + username + "\" ;";
+        return find(query, db);
+    }
+
+    public static List<User> findAllByName(String name, Database db) {
+        String query = selectWhere + "name = ?";
+        return findAllByQuery(query, db, name);
+    }
+
+    public static List<User> findAllByEmail(String email, Database db) {
+        String query = selectWhere + "email = ?";
+        return findAllByQuery(query, db, email);
+    }
+
+    public static List<User> findAllByAddress(String address, Database db) {
+        String query = selectWhere + "address = ?";
+        return findAllByQuery(query, db, address);
+    }
+
+    public static List<User> findAllByBestFriend(String bestFriend, Database db) {
+        String query = selectWhere + "bestFriend = ?";
+        return findAllByQuery(query, db, bestFriend);
+    }
+
+    //    update
+    public static boolean update(User user, Database db) {
+        Address address = user.getAddress();
+        User bestFriend = user.getBestFriend();
+        try (Connection conn = DriverManager.getConnection(db.url)){
+
+            PreparedStatement stm = conn.prepareStatement(updateStatement);
+
+            stm.setString(1, user.getName());
+            stm.setString(2, user.getEmail());
+            stm.setString(3, address.getStreetAddress());
+            stm.setString(4, user.getPassword());
+            stm.setString(5, bestFriend.getUsername());
+            stm.setString(6, user.getUsername());
 
             stm.executeUpdate();
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;
         }
         return true;
     }
 
-    //    update
-//    public static void update(String id, String[] param, Database db) {
-//        Address address = Address.findByStreetAddress(param[1], db);
-//        if(address == null) {
-//            address = new Address(param[1]);
-//            Address.insert(address, db);
-//        }
-//        if(param[3] != null) {
-//            param[3] = "\"" + param[3] + "\"";
-//        }
-//        try (Connection conn = DriverManager.getConnection(db.url)){
-//            String query = update +
-//                    " id = \"" + param[4] + "\"," +
-//                    " name = \"" + param[0] + "\"," +
-//                    " address = \"" + address.getName() + "\"," +
-//                    " password = \"" + param[2] + "\"," +
-//                    " bestfriend = " + param[3] + "" +
-//                    " WHERE id == \"" + id + "\" ;";
-//
-//
-//            PreparedStatement stm = conn.prepareStatement(query);
-//
-//            stm.executeUpdate();
-//            stm.executeUpdate();
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-//  delete
+//      delete
     public static boolean delete(User user, Database db) {
         try (Connection conn = DriverManager.getConnection(db.url)){
 
