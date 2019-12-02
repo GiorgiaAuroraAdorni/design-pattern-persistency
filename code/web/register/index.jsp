@@ -27,7 +27,7 @@
 <label for="name">Name</label><input type="text" name="name" value="${user.name}"><br>
 <label for="email">Email</label><input type="text" name="email" value="${user.email}"><br>
 <label for="address">Address</label><input type="text" name="address" value="${user.address.getStreetAddress()}"><br>
-<label for="bestFriend">BestFriend</label><input type="text" name="bestFriend" value="${user.bestFriend}"><br>
+<label for="bestFriend">Best Friend</label><input type="text" name="bestFriend" value="${user.bestFriend}"><br>
 </p>
 
 <button type="submit" name="command" value="${command}"><c:out value="${submitText}" /></button>

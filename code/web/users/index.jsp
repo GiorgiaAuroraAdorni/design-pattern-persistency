@@ -36,7 +36,7 @@
                 <td>Name</td>
                 <td>Email</td>
                 <td>Address</td>
-                <td>BestFriend</td>
+                <td>Best Friend</td>
             </tr>
             </thead>
             <tbody>
@@ -72,21 +72,15 @@
     </c:otherwise>
 </c:choose>
 
-
+<h2>Search User</h2>
 <form name="frm">
     <table>
         <tr>
-            <td colspan=2 style="font-size:12pt;" align="center">
-                        <h3>Search User</h3></td>
-        </tr>
-           
-        <tr></tr>
         <td>Name</td>
-          
         <td>
             <form name="frm" method="get" action="/design_pattern/FrontController">
                 <input type="hidden" name="field" value="name">
-                <input type="text" name="query" placeholder="Insert query?" value="${query}">
+                <input type="text" name="query" placeholder="name?" value="${query}">
                 <button type="submit" name="command" value="auth.UserList">Search</button>
             </form>
         </td>
@@ -97,19 +91,19 @@
             <td>
                 <form name="frm" method="get" action="/design_pattern/FrontController">
                     <input type="hidden" name="field" value="address">
-                    <input type="text" name="query" placeholder="Insert query?" value="${query}">
+                    <input type="text" name="query" placeholder="address?" value="${query}">
                     <button type="submit" name="command" value="auth.UserList">Search</button>
                 </form>
             </td>
         </tr>
          
         <tr>
-            <td>BestFriend</td>
+            <td>Best Friend</td>
               
             <td>
                 <form name="frm" method="get" action="/design_pattern/FrontController">
                     <input type="hidden" name="field" value="bestFriend">
-                    <input type="text" name="query" placeholder="Insert query?" value="${query}">
+                    <input type="text" name="query" placeholder="best friend?" value="${query}">
                     <button type="submit" name="command" value="auth.UserList">Search</button>
                 </form>
             </td>
